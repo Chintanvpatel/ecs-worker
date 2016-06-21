@@ -1,11 +1,5 @@
 // We won't have the same exact context object as AWS Lambda of course, but there will be some useful info here.
-var pjson = require('./package.json');
 var context = {
-	// Not present in Lambda, we will make available the package.json to our context.
-	package: pjson,
-	// Not exactly the same thing, but close.
-	functionName: pjson.name,
-	functionVersion: pjson.version,
 	memoryLimitInMB: 0,
 	invokedFunctionArn: "",
 	done: function(err, msg) { if(err){ console.log(msg); } process.exit(); },
@@ -52,5 +46,5 @@ if(process.argv[2] !== undefined) {
 // Just in case your Lambda doesn't catch some error. This ensures the container exits, freeing things up.
 process.on('uncaughtException', function (err) {
   console.log(err, err.stack);
-  process.exit(1);
+  process.exit();
 });
